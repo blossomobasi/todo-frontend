@@ -1,10 +1,11 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { User } from "../types/user";
+import { User, UserResponse } from "../types/user";
 
 interface UserContextType {
     isLoading: boolean;
     user: User | undefined;
     setUser: (user: User | undefined) => void;
+    isAuthenticated: boolean;
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -12,6 +13,7 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 function UserProvider({ children }: { children: React.ReactNode }) {
     const [user, setUser] = useState<User | undefined>(undefined);
     const [isLoading, setIsLoading] = useState(true);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
 
     useEffect(() => {
         async function fetchUser() {
@@ -23,8 +25,9 @@ function UserProvider({ children }: { children: React.ReactNode }) {
                         credentials: "include",
                     }
                 );
-                const data = await res.json();
-                setUser(data);
+                const data: UserResponse = await res.json();
+                setUser(data.data.user);
+                setIsAuthenticated(data.data.user.role.includes("user"));
             } catch (error) {
                 console.error(error);
             } finally {
@@ -33,10 +36,12 @@ function UserProvider({ children }: { children: React.ReactNode }) {
         }
 
         fetchUser();
-    });
+    }, []);
 
     return (
-        <UserContext.Provider value={{ user, setUser, isLoading }}>{children}</UserContext.Provider>
+        <UserContext.Provider value={{ user, setUser, isLoading, isAuthenticated }}>
+            {children}
+        </UserContext.Provider>
     );
 }
 
