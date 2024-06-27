@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useUser } from "../contexts/useUser";
+import { useUser } from "../hooks/useUser";
 import { useEffect } from "react";
 
 function ProtectedRoutes({ children }: { children: React.ReactNode }) {
