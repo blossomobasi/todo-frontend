@@ -6,3 +6,10 @@ export interface User {
     createdAt: string;
     __v: number;
 }
+
+export interface UserResponse {
+    status: string;
+    data: {
+        user: User;
+    };
+}
