@@ -2,15 +2,23 @@ import React from "react";
 import { login } from "../api/auth";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
+import { AuthResponse } from "../types/auth";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
+    const navigate = useNavigate();
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
 
     async function handleLogin(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
 
-        await login({ email, password });
+        const res: AuthResponse = await login({ email, password });
+
+        if (res.status === "success") {
+            console.log("Logged in successfully");
+            navigate("/");
+        }
     }
 
     return (
