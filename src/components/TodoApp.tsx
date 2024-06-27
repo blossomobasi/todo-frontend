@@ -7,7 +7,7 @@ function TodoApp() {
 
     return (
         <div>
-            <h1 className="text-2xl mt-14">Welcome, {user?.username}</h1>
+            <h1 className="text-2xl mt-8 text-center">Welcome, {user?.username}</h1>
 
             <AddTodo />
             <Todos />
