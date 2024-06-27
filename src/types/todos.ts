@@ -11,3 +11,11 @@ export interface TodoInput {
     description: string;
     remainder?: string;
 }
+
+export interface TodoResponse {
+    status: string;
+    results: number;
+    data: {
+        todos: Todo[];
+    };
+}
