@@ -1,36 +1,19 @@
-import { useEffect, useState } from "react";
-import { getTodos } from "../api/todos";
-import { Todo } from "../types/todos";
 import { Check, Trash } from "lucide-react";
 import { dateFormatter } from "../utils";
+import { useTodos } from "../hooks/todo/useTodos";
 
 function Todos() {
-    const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [todos, setTodos] = useState<Todo[] | null>(null);
-
-    useEffect(() => {
-        async function fetchTodos() {
-            try {
-                setIsLoading(true);
-                const res = await getTodos();
-                setTodos(res.data.todos);
-            } catch (err) {
-                console.error(err);
-            } finally {
-                setIsLoading(false);
-            }
-        }
-
-        fetchTodos();
-    }, []);
+    const { todos, isLoading, result, error } = useTodos();
 
     if (isLoading) return <p>Loading...</p>;
+
+    if (error) return <p>Something went wrong...</p>;
 
     if (!todos?.length) return <p>No task available... Add a task</p>;
 
     return (
         <div>
-            <div className="text-white mb-3">Task to do &mdash; {todos.length}</div>
+            <div className="text-white mb-3">Task to do &mdash; {result}</div>
 
             {todos.map((todo) => (
                 <div key={todo._id} className="bg-[#15101C] rounded-lg px-5 pt-5 pb-2 mb-3">
