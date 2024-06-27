@@ -1,24 +1,17 @@
 import React from "react";
-import { login } from "../api/auth";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
-import { AuthResponse } from "../types/auth";
-import { useNavigate } from "react-router-dom";
+import { useLogin } from "../hooks/auth/useLogin";
 
 function Login() {
-    const navigate = useNavigate();
+    const { login, isLoggingIn } = useLogin();
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
 
-    async function handleLogin(e: React.FormEvent<HTMLFormElement>) {
+    function handleLogin(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
 
-        const res: AuthResponse = await login({ email, password });
-
-        if (res.status === "success") {
-            console.log("Logged in successfully");
-            navigate("/");
-        }
+        login({ email, password });
     }
 
     return (
@@ -29,14 +22,20 @@ function Login() {
                     type="email"
                     placeholder="Email"
                     onChange={(e) => setEmail(e.target.value)}
+                    disabled={isLoggingIn}
                 />
                 <Input
                     type="password"
                     placeholder="Password"
                     onChange={(e) => setPassword(e.target.value)}
+                    disabled={isLoggingIn}
                 />
 
-                <Button type="submit" className="bg-[#9e78cf] hover:bg-[#3e1671]">
+                <Button
+                    type="submit"
+                    disabled={isLoggingIn}
+                    className="bg-[#9e78cf] hover:bg-[#3e1671]"
+                >
                     Login
                 </Button>
             </form>
