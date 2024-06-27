@@ -33,3 +33,15 @@ export async function signup(credentials: Signup) {
 
     return res.json();
 }
+
+export async function getMe() {
+    const res = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/api/v1/users/me`, {
+        credentials: "include",
+    });
+
+    if (!res.ok) {
+        throw new Error("Failed to get user");
+    }
+
+    return res.json();
+}
