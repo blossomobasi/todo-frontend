@@ -1,4 +1,4 @@
-import { Check, Trash } from "lucide-react";
+import { Bell, Check, Trash } from "lucide-react";
 import { dateFormatter } from "../utils";
 import { useTodos } from "../hooks/todo/useTodos";
 
@@ -12,7 +12,7 @@ function Todos() {
     if (!todos?.length) return <p>No task available... Add a task</p>;
 
     return (
-        <div>
+        <div className="h-[calc(100vh-14rem)] overflow-y-auto px-5 py-3 space-y-3 rounded-md">
             <div className="text-white mb-3">Task to do &mdash; {result}</div>
 
             {todos.map((todo) => (
@@ -27,7 +27,17 @@ function Todos() {
                         </span>
                     </div>
 
-                    <span className="text-xs text-stone-700">{dateFormatter(todo.createdAt)}</span>
+                    <div className="flex justify-between mt-1.5">
+                        <span className="text-xs text-stone-700">
+                            {dateFormatter(todo.createdAt)}
+                        </span>
+                        {todo.reminder && (
+                            <span className="flex items-center text-xs text-stone-700">
+                                <Bell size={12} className="mr-2 text-purple-200" />
+                                {dateFormatter(todo.reminder)}
+                            </span>
+                        )}
+                    </div>
                 </div>
             ))}
         </div>
