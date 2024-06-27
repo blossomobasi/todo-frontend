@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import ProtectedRoutes from "./components/ProtectedRoutes";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 function App() {
     const queryClient = new QueryClient({
@@ -16,6 +17,7 @@ function App() {
 
     return (
         <QueryClientProvider client={queryClient}>
+            <ReactQueryDevtools initialIsOpen={false} />
             <BrowserRouter>
                 <Routes>
                     <Route
