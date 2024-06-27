@@ -4,24 +4,26 @@ import { Button } from "./ui/button";
 import React from "react";
 import { Switch } from "./ui/switch";
 import { useCreateTodo } from "../hooks/todo/useCreateTodo";
+import Calender from "./Calender";
 
 function AddTodo() {
     const { createTodo, isCreatingTodo } = useCreateTodo();
 
     const [description, setDescription] = React.useState("");
-    // const [remainder, setRemainder] = React.useState(false);
+    const [reminder, setReminder] = React.useState(false);
+    const [startDate, setStartDate] = React.useState(new Date());
 
     function handleAddTodo(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
 
         createTodo({
             description,
-            // remainder
+            reminder: reminder ? startDate.toISOString() : undefined,
         });
     }
 
     return (
-        <form className="my-10" onSubmit={handleAddTodo}>
+        <form className="my-5" onSubmit={handleAddTodo}>
             <div className="flex items-center space-x-5">
                 <Input
                     type="text"
@@ -40,9 +42,19 @@ function AddTodo() {
                 </Button>
             </div>
 
-            <div className="mt-5 flex items-center space-x-5 justify-end">
-                <label htmlFor="remainder">Remainder</label>
-                <Switch id="remainder" disabled={isCreatingTodo} />
+            <div className="flex flex-col items-end space-y-3">
+                <div className="mt-5 flex items-center space-x-5 justify-end">
+                    <label htmlFor="reminder">reminder</label>
+                    <Switch
+                        id="reminder"
+                        disabled={isCreatingTodo}
+                        checked={reminder}
+                        onClick={() => setReminder(!reminder)}
+                    />
+                </div>
+                <div>
+                    {reminder && <Calender startDate={startDate} setStartDate={setStartDate} />}
+                </div>
             </div>
         </form>
     );
