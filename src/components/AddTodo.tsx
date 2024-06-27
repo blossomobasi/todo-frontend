@@ -3,9 +3,11 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import React from "react";
 import { Switch } from "./ui/switch";
-import { createTodo } from "../api/todos";
+import { useCreateTodo } from "../hooks/todo/useCreateTodo";
 
 function AddTodo() {
+    const { createTodo, isCreatingTodo } = useCreateTodo();
+
     const [description, setDescription] = React.useState("");
     // const [remainder, setRemainder] = React.useState(false);
 
@@ -14,7 +16,7 @@ function AddTodo() {
 
         createTodo({
             description,
-            // remainder,
+            // remainder
         });
     }
 
@@ -26,16 +28,21 @@ function AddTodo() {
                     placeholder="Add a task..."
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
+                    disabled={isCreatingTodo}
                 />
 
-                <Button type="submit" className="bg-[#9e78cf] hover:bg-[#3e1671]">
+                <Button
+                    type="submit"
+                    disabled={isCreatingTodo}
+                    className="bg-[#9e78cf] hover:bg-[#3e1671]"
+                >
                     <Plus size={24} />
                 </Button>
             </div>
 
             <div className="mt-5 flex items-center space-x-5 justify-end">
                 <label htmlFor="remainder">Remainder</label>
-                <Switch id="remainder" />
+                <Switch id="remainder" disabled={isCreatingTodo} />
             </div>
         </form>
     );
