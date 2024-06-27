@@ -3,13 +3,13 @@ export interface Todo {
     description: string;
     completed: boolean;
     createdAt: string;
-    remainder?: string;
+    reminder?: string;
     __v: number;
 }
 
 export interface TodoInput {
     description: string;
-    remainder?: string;
+    reminder?: string;
 }
 
 export interface TodoResponse {
