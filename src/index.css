@@ -87,4 +87,9 @@
         display: flex;
         justify-content: center;
     }
+    /* All disabled input should use cursor of not-allowed */
+    input:disabled,
+    button:disabled {
+        cursor: not-allowed;
+    }
 }
