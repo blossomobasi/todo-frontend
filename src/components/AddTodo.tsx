@@ -6,8 +6,10 @@ import { Switch } from "./ui/switch";
 import { useCreateTodo } from "../hooks/todo/useCreateTodo";
 import Calender from "./Calender";
 import { useDate } from "../context/DateContext";
+import { useToast } from "./ui/use-toast";
 
 function AddTodo() {
+    const { toast } = useToast();
     const { createTodo, isCreatingTodo } = useCreateTodo();
     const { startDate, setStartDate } = useDate();
 
@@ -18,13 +20,21 @@ function AddTodo() {
         e.preventDefault();
 
         if (!description) {
-            console.log("Please enter a task description");
+            toast({
+                title: "Task",
+                description: "Task description is required",
+            });
             return;
         }
 
         createTodo({
             description,
             reminder: reminder ? startDate.toISOString() : undefined,
+        });
+
+        toast({
+            title: "Task",
+            description: "Task added successfully",
         });
 
         setDescription("");
