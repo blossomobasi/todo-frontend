@@ -1,15 +1,23 @@
 import { Bell, Check, Trash } from "lucide-react";
 import { dateFormatter } from "../utils";
 import { useTodos } from "../hooks/todo/useTodos";
+import { useDeleteTodo } from "../hooks/todo/useDeleteTodo";
+import { useState } from "react";
 
 function Todos() {
     const { todos, isLoading, result, error } = useTodos();
+    const { deleteTodo, isDeleting } = useDeleteTodo();
+    const [isCompleted, setIsCompleted] = useState(false);
 
     if (isLoading) return <p>Loading...</p>;
 
     if (error) return <p>Something went wrong...</p>;
 
     if (!todos?.length) return <p>No task available... Add a task</p>;
+
+    function handleDeleteTodo(id: string) {
+        deleteTodo(id);
+    }
 
     return (
         <div className="h-[calc(100vh-14rem)] overflow-y-auto px-5 py-3 space-y-3 rounded-md">
@@ -18,12 +26,25 @@ function Todos() {
             {todos.map((todo) => (
                 <div key={todo._id} className="bg-[#15101C] rounded-lg px-5 pt-5 pb-2 mb-3">
                     <div className="flex justify-between">
-                        <p className=" w-3/4 truncate" title={todo.description}>
+                        <p
+                            className={`w-3/4 truncate ${
+                                isCompleted && "text-[#78cfb0] line-through"
+                            }`}
+                            title={todo.description}
+                        >
                             {todo.description}
                         </p>
                         <span className="flex items-center space-x-2">
-                            <Check className="hover:text-[#3e1671] cursor-pointer" />
-                            <Trash className="hover:text-[#3e1671] cursor-pointer" />
+                            <Check
+                                className="hover:text-[#3e1671] cursor-pointer"
+                                onClick={() => setIsCompleted(!isCompleted)}
+                            />
+                            <Trash
+                                className={`hover:text-[#3e1671] cursor-pointer ${
+                                    isDeleting ? "opacity-50 cursor-not-allowed" : ""
+                                }`}
+                                onClick={() => handleDeleteTodo(todo._id)}
+                            />
                         </span>
                     </div>
 
