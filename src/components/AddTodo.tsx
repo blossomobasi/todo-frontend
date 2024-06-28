@@ -5,13 +5,14 @@ import React from "react";
 import { Switch } from "./ui/switch";
 import { useCreateTodo } from "../hooks/todo/useCreateTodo";
 import Calender from "./Calender";
+import { useDate } from "../context/DateContext";
 
 function AddTodo() {
     const { createTodo, isCreatingTodo } = useCreateTodo();
+    const { startDate, setStartDate } = useDate();
 
     const [description, setDescription] = React.useState("");
     const [reminder, setReminder] = React.useState(false);
-    const [startDate, setStartDate] = React.useState(new Date());
 
     function handleAddTodo(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
