@@ -14,7 +14,6 @@ export function useLogin() {
     } = useMutation<AuthResponse, Error, Login>({
         mutationFn: loginApi,
         onSuccess: () => {
-            // console.log("Logged in successfully");
             toast({
                 title: "Authentication",
                 description: "Successfully Logged In",
