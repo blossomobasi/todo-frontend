@@ -16,14 +16,22 @@ function AddTodo() {
     function handleAddTodo(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
 
+        if (!description) {
+            console.log("Please enter a task description");
+            return;
+        }
+
         createTodo({
             description,
             reminder: reminder ? startDate.toISOString() : undefined,
         });
+
+        setDescription("");
+        setReminder(false);
     }
 
     return (
-        <form className="my-5" onSubmit={handleAddTodo}>
+        <form className="my-5 ml-5" onSubmit={handleAddTodo}>
             <div className="flex items-center space-x-5">
                 <Input
                     type="text"
