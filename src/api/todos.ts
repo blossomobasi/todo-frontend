@@ -1,4 +1,4 @@
-import { TodoInput } from "../types/todos";
+import { TodoInput, UpdateTodoInput } from "../types/todos";
 
 export async function getTodos() {
     const res = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/api/v1/todos`);
@@ -27,9 +27,9 @@ export async function createTodo(todo: TodoInput) {
     return res.json();
 }
 
-export async function updateTodo(id: string, todo: TodoInput) {
+export async function updateTodo(id: string, todo: UpdateTodoInput) {
     const res = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/api/v1/todos/${id}`, {
-        method: "PUT",
+        method: "PATCH",
         headers: {
             "Content-Type": "application/json",
         },
