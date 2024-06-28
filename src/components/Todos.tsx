@@ -4,8 +4,11 @@ import { useTodos } from "../hooks/todo/useTodos";
 import { useDeleteTodo } from "../hooks/todo/useDeleteTodo";
 import { useUpdateTodo } from "../hooks/todo/useUpdateTodo";
 import { useState } from "react";
+import { useToast } from "./ui/use-toast";
+import { ToastAction } from "./ui/toast";
 
 function Todos() {
+    const { toast } = useToast();
     const { todos, isLoading, result, error } = useTodos();
     const { deleteTodo, isDeleting } = useDeleteTodo();
     const { updateTodo } = useUpdateTodo();
@@ -21,7 +24,17 @@ function Todos() {
     if (!todos?.length) return <p>No task available... Add a task</p>;
 
     function handleDeleteTodo(id: string) {
-        deleteTodo(id);
+        toast({
+            title: "Task",
+            description: "Are you sure?",
+            action: (
+                <ToastAction altText="delete task" onClick={() => deleteTodo(id)}>
+                    Delete
+                </ToastAction>
+            ),
+        });
+
+        // deleteTodo(id);
     }
 
     function handleCompleteTodo(todoId: string, currentStatus: boolean) {
