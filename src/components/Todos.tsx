@@ -3,11 +3,14 @@ import { dateFormatter } from "../utils";
 import { useTodos } from "../hooks/todo/useTodos";
 import { useDeleteTodo } from "../hooks/todo/useDeleteTodo";
 import { useState } from "react";
+import { useUpdateTodo } from "../hooks/todo/useUpdateTodo";
 
 function Todos() {
     const { todos, isLoading, result, error } = useTodos();
     const { deleteTodo, isDeleting } = useDeleteTodo();
-    const [isCompleted, setIsCompleted] = useState(false);
+    const { updateTodo, isUpdatingTodo } = useUpdateTodo();
+
+    const [completed, setCompleted] = useState(false);
 
     if (isLoading) return <p>Loading...</p>;
 
@@ -19,6 +22,17 @@ function Todos() {
         deleteTodo(id);
     }
 
+    function handleCompleteTodo(todoId: string, currentStatus: boolean) {
+        updateTodo({
+            todoId,
+            updateTodoInput: {
+                completed: !currentStatus,
+            },
+        });
+
+        setCompleted(!completed);
+    }
+
     return (
         <div className="h-[calc(100vh-14rem)] overflow-y-auto px-5 py-3 space-y-3 rounded-md">
             <div className="text-white mb-3">Task to do &mdash; {result}</div>
@@ -28,7 +42,7 @@ function Todos() {
                     <div className="flex justify-between">
                         <p
                             className={`w-3/4 truncate ${
-                                isCompleted && "text-[#78cfb0] line-through"
+                                todo.completed && "text-[#78cfb0] line-through"
                             }`}
                             title={todo.description}
                         >
@@ -37,7 +51,7 @@ function Todos() {
                         <span className="flex items-center space-x-2">
                             <Check
                                 className="hover:text-[#3e1671] cursor-pointer"
-                                onClick={() => setIsCompleted(!isCompleted)}
+                                onClick={() => handleCompleteTodo(todo._id, todo.completed)}
                             />
                             <Trash
                                 className={`hover:text-[#3e1671] cursor-pointer ${
