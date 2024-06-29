@@ -1,15 +1,15 @@
 import { Bell, Check, ChevronDown, Trash } from "lucide-react";
 import { dateFormatter } from "../utils";
-import { useTodos } from "../hooks/todo/useTodos";
 import { useDeleteTodo } from "../hooks/todo/useDeleteTodo";
 import { useUpdateTodo } from "../hooks/todo/useUpdateTodo";
 import { useState } from "react";
 import { useToast } from "./ui/use-toast";
 import { ToastAction } from "./ui/toast";
+import { useTodos } from "../hooks/todo/useTodos";
 
 function Todos() {
+    const { todos, isLoading: isLoadingTodos, result, error } = useTodos();
     const { toast } = useToast();
-    const { todos, isLoading, result, error } = useTodos();
     const { deleteTodo, isDeleting } = useDeleteTodo();
     const { updateTodo } = useUpdateTodo();
     const [openCompleted, setOpenCompleted] = useState(true);
@@ -17,9 +17,9 @@ function Todos() {
     const UNCOMPLETEDTASK = todos?.filter((todo) => !todo.completed);
     const COMPLETEDTASK = todos?.filter((todo) => todo.completed);
 
-    if (isLoading) return <p>Loading...</p>;
+    if (isLoadingTodos) return <p>Loading...</p>;
 
-    if (error) return <p>Something went wrong...</p>;
+    if (error) return <p>{error.message || "Something went wrong"}</p>;
 
     if (!todos?.length) return <p>No task available... Add a task</p>;
 
@@ -33,8 +33,6 @@ function Todos() {
                 </ToastAction>
             ),
         });
-
-        // deleteTodo(id);
     }
 
     function handleCompleteTodo(todoId: string, currentStatus: boolean) {
