@@ -21,7 +21,7 @@ function Todos() {
 
     if (error) return <p>{error.message || "Something went wrong"}</p>;
 
-    if (!todos?.length) return <p>No task available... Add a task</p>;
+    if (!todos?.length) return <p className="ml-5">No task available... Add a task</p>;
 
     function handleDeleteTodo(id: string) {
         toast({
@@ -44,6 +44,13 @@ function Todos() {
         });
     }
 
+    function handleUpdateTodo() {
+        toast({
+            title: "Update Task",
+            description: "Feature not available yet",
+        });
+    }
+
     return (
         <div className="h-[calc(100vh-14rem)] overflow-y-auto px-5 py-3 space-y-3 rounded-md">
             <div className="text-[#78cfb0]  mb-3">Total Task &mdash; {result}</div>
@@ -57,6 +64,7 @@ function Todos() {
                         <div key={todo._id} className="bg-[#15101C] rounded-lg px-5 pt-5 pb-2 mb-3">
                             <div className="flex justify-between">
                                 <p
+                                    onClick={handleUpdateTodo}
                                     className={`w-3/4 truncate ${
                                         todo.completed && "text-[#78cfb0] line-through"
                                     }`}
@@ -94,22 +102,28 @@ function Todos() {
             )}
 
             {/* COMPLETED TASK */}
-            <div
-                className="text-white mb-3 pt-5 flex items-center space-x-2 cursor-pointer"
-                onClick={() => setOpenCompleted(!openCompleted)}
-            >
-                <span>
-                    <ChevronDown
-                        className={`${
-                            openCompleted ? "rotate-180" : "rotate-0"
-                        } transition-transform duration-300`}
-                    />
-                </span>
-                <p>
-                    Completed Task &mdash;
-                    {COMPLETEDTASK?.length}
-                </p>
-            </div>
+            {COMPLETEDTASK?.length ? (
+                <div
+                    className="text-white mb-3 pt-5 flex items-center space-x-2 cursor-pointer"
+                    onClick={() => setOpenCompleted(!openCompleted)}
+                >
+                    <span>
+                        <ChevronDown
+                            className={`${
+                                openCompleted ? "rotate-180" : "rotate-0"
+                            } transition-transform duration-300`}
+                        />
+                    </span>
+
+                    <p>
+                        Completed Task &mdash;
+                        {COMPLETEDTASK?.length}
+                    </p>
+                </div>
+            ) : (
+                ""
+            )}
+
             {COMPLETEDTASK?.map(
                 (todo) =>
                     todo.completed && (
