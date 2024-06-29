@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
-import { getTodos } from "../../api/todos";
+import { getUserTodos } from "../../api/todos";
 import { TodosResponse } from "../../types/todos";
 
 export function useTodos() {
     const { data, isLoading, error } = useQuery<TodosResponse, Error>({
         queryKey: ["todos"],
-        queryFn: getTodos,
+        queryFn: getUserTodos,
     });
 
     return {
