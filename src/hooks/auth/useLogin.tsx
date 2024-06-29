@@ -15,14 +15,17 @@ export function useLogin() {
         mutationFn: loginApi,
         onSuccess: () => {
             toast({
-                title: "Authentication",
+                title: "Login Success",
                 description: "Successfully Logged In",
             });
 
             navigate("/");
         },
         onError: (error) => {
-            console.error(error);
+            toast({
+                title: "Login Failed",
+                description: error.message,
+            });
         },
     });
 
