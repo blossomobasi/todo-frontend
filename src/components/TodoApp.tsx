@@ -7,7 +7,7 @@ function TodoApp() {
 
     return (
         <div>
-            <h1 className="text-2xl mt-5 capitalize ml-5">
+            <h1 className="text-2xl mt-5 capitalize">
                 Welcome {user?.username},
                 <br />
                 What is you task for today?
