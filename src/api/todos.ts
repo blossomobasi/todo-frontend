@@ -10,6 +10,18 @@ export async function getTodos() {
     return res.json();
 }
 
+export async function getUserTodos() {
+    const res = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/api/v1/todos/mytodos`, {
+        credentials: "include", // This is required for cookies to be sent
+    });
+
+    if (!res.ok) {
+        throw new Error("Failed to fetch user todos");
+    }
+
+    return res.json();
+}
+
 export async function createTodo(todo: TodoInput) {
     const res = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/api/v1/todos`, {
         method: "POST",
