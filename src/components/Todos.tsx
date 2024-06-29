@@ -21,7 +21,7 @@ function Todos() {
 
     if (error) return <p>{error.message || "Something went wrong"}</p>;
 
-    if (!todos?.length) return <p className="ml-5">No task available... Add a task</p>;
+    if (!todos?.length) return <p>No task available... Add a task</p>;
 
     function handleDeleteTodo(id: string) {
         toast({
@@ -52,7 +52,7 @@ function Todos() {
     }
 
     return (
-        <div className="h-[calc(100vh-14rem)] overflow-y-auto px-5 py-3 space-y-3 rounded-md">
+        <div className="h-[calc(100vh-14rem)] overflow-y-auto py-3 space-y-3 rounded-md">
             <div className="text-[#78cfb0]  mb-3">Total Task &mdash; {result}</div>
 
             <div className="text-white mb-3">
