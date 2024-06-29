@@ -42,7 +42,7 @@ function AddTodo() {
     }
 
     return (
-        <form className="my-5 ml-5" onSubmit={handleAddTodo}>
+        <form className="my-5" onSubmit={handleAddTodo}>
             <div className="flex items-center space-x-5">
                 <Input
                     type="text"
