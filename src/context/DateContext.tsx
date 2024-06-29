@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useTodos } from "../hooks/todo/useTodos";
-import { dateFormatter } from "../utils";
+import { useToast } from "../components/ui/use-toast";
+import { ToastAction } from "../components/ui/toast";
 
 type DateContextType = {
     startDate: Date;
@@ -10,6 +11,7 @@ type DateContextType = {
 const DateContext = createContext<DateContextType | undefined>(undefined);
 
 function DateProvider({ children }: { children: React.ReactNode }) {
+    const { toast } = useToast();
     const { todos } = useTodos();
     const [startDate, setStartDate] = useState<Date>(new Date(Date.now()));
 
@@ -29,12 +31,14 @@ function DateProvider({ children }: { children: React.ReactNode }) {
                     );
                     return;
                 }
-                console.log("Reminder", dateFormatter(reminderDate));
-                console.log("current", dateFormatter(currentTime));
+
                 if (reminderDate === currentTime) {
                     // Trigger the bell ring action
-                    console.log("True");
-                    console.log("Ring the bell! Reminder date and time is now:", reminderDate);
+                    toast({
+                        title: "Reminder",
+                        description: "Ring! Ring! Ring!.. Your reminder is here",
+                        action: <ToastAction altText="Close Reminder">Close</ToastAction>,
+                    });
                     return;
                 }
             });
@@ -44,7 +48,7 @@ function DateProvider({ children }: { children: React.ReactNode }) {
         const intervalId = setInterval(checkReminders, 1000);
 
         return () => clearInterval(intervalId); // Cleanup interval on component unmount
-    }, [reminderDatesOfAllTodosWithReminder]);
+    }, [reminderDatesOfAllTodosWithReminder, toast]);
 
     return (
         <DateContext.Provider value={{ startDate, setStartDate }}>{children}</DateContext.Provider>
