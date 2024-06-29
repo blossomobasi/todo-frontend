@@ -15,13 +15,16 @@ export function useSignup() {
         mutationFn: signupApi,
         onSuccess: () => {
             toast({
-                title: "Signup",
+                title: "Signup Success",
                 description: "Signed up successfully",
             });
             navigate("/");
         },
         onError: (error) => {
-            console.error(error);
+            toast({
+                title: "Signup Failed",
+                description: error.message,
+            });
         },
     });
 
