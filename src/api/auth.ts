@@ -11,7 +11,8 @@ export async function login(credentials: Login) {
     });
 
     if (!res.ok) {
-        throw new Error("Failed to login");
+        const error = await res.json();
+        throw new Error(error.message || "Failed to login");
     }
 
     return res.json();
@@ -28,7 +29,8 @@ export async function signup(credentials: Signup) {
     });
 
     if (!res.ok) {
-        throw new Error("Failed to signup");
+        const error = await res.json();
+        throw new Error(error.message || "Failed to signup");
     }
 
     return res.json();
@@ -40,7 +42,8 @@ export async function getMe() {
     });
 
     if (!res.ok) {
-        throw new Error("Failed to get user");
+        const error = await res.json();
+        throw new Error(error.message || "Failed to get user");
     }
 
     return res.json();
