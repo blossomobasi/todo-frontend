@@ -114,7 +114,6 @@ function Todos() {
                             } transition-transform duration-300`}
                         />
                     </span>
-
                     <p>
                         Completed Task &mdash;
                         {COMPLETEDTASK?.length}
