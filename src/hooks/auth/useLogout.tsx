@@ -28,6 +28,7 @@ export function useLogout() {
                 queryKey: ["user"],
             });
 
+            window.location.reload();
             toast({
                 title: "Logout",
                 description: "Successfully logged out",
