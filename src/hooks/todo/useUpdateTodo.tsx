@@ -1,8 +1,10 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { updateTodo as updateTodoApi } from "../../api/todos";
 import { TodoResponse, UpdateTodoInput } from "../../types/todos";
+import { useToast } from "../../components/ui/use-toast";
 
 export function useUpdateTodo() {
+    const { toast } = useToast();
     const queryClient = useQueryClient();
     const { mutate: updateTodo, isPending: isUpdatingTodo } = useMutation<
         TodoResponse,
@@ -15,9 +17,17 @@ export function useUpdateTodo() {
             queryClient.invalidateQueries({
                 queryKey: ["todos"],
             });
+
+            toast({
+                title: "Task",
+                description: "Successfully updated task",
+            });
         },
         onError: (err) => {
-            console.error(err);
+            toast({
+                title: "Task",
+                description: err.message || "Failed to update task",
+            });
         },
     });
 
