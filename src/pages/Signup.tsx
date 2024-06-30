@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { useSignup } from "../hooks/auth/useSignup";
+import AuthLayout from "../components/AuthLayout";
 
 function Signup() {
     const { signup, isSigningUp } = useSignup();
@@ -16,8 +17,8 @@ function Signup() {
     }
 
     return (
-        <div className="w-[22rem] mt-28">
-            <h1 className="text-center my-5 text-2xl">Signup</h1>
+        <AuthLayout>
+            <h1 className="text-center mb-7 mt-20 text-2xl">Signup</h1>
             <form className="flex flex-col space-y-5" onSubmit={handleSignup}>
                 <Input
                     type="text"
@@ -49,7 +50,7 @@ function Signup() {
                     Signup
                 </Button>
             </form>
-        </div>
+        </AuthLayout>
     );
 }
 
