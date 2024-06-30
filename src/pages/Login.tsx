@@ -2,6 +2,7 @@ import React from "react";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { useLogin } from "../hooks/auth/useLogin";
+import AuthLayout from "../components/AuthLayout";
 
 function Login() {
     const { login, isLoggingIn } = useLogin();
@@ -15,8 +16,8 @@ function Login() {
     }
 
     return (
-        <div className="w-[22rem] mt-28">
-            <h1 className="text-center my-5 text-2xl">Login</h1>
+        <AuthLayout>
+            <h1 className="text-center mb-7 mt-20 text-2xl">Login</h1>
             <form className="flex flex-col space-y-5" onSubmit={handleLogin}>
                 <Input
                     type="email"
@@ -39,7 +40,7 @@ function Login() {
                     Login
                 </Button>
             </form>
-        </div>
+        </AuthLayout>
     );
 }
 
