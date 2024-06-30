@@ -4,7 +4,8 @@ export async function getTodos() {
     const res = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/api/v1/todos`);
 
     if (!res.ok) {
-        throw new Error("Failed to fetch todos");
+        const error = await res.json();
+        throw new Error(error.message || "Failed to fetch todos");
     }
 
     return res.json();
@@ -16,7 +17,8 @@ export async function getUserTodos() {
     });
 
     if (!res.ok) {
-        throw new Error("Failed to fetch user todos");
+        const error = await res.json();
+        throw new Error(error.message || "Failed to fetch user todos");
     }
 
     return res.json();
@@ -33,7 +35,8 @@ export async function createTodo(todo: TodoInput) {
     });
 
     if (!res.ok) {
-        throw new Error("Failed to create todo");
+        const error = await res.json();
+        throw new Error(error.message || "Failed to create todo");
     }
 
     return res.json();
@@ -50,7 +53,8 @@ export async function updateTodo(id: string, todo: UpdateTodoInput) {
     });
 
     if (!res.ok) {
-        throw new Error("Failed to update todo");
+        const error = await res.json();
+        throw new Error(error.message || "Failed to update todo");
     }
 
     return res.json();
@@ -63,7 +67,8 @@ export async function deleteTodo(id: string) {
     });
 
     if (!res.ok) {
-        throw new Error("Failed to delete todo");
+        const error = await res.json();
+        throw new Error(error.message || "Failed to delete todo");
     }
 
     return res.json();
