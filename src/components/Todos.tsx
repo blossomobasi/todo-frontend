@@ -44,10 +44,13 @@ function Todos() {
         });
     }
 
-    function handleUpdateTodo() {
-        toast({
-            title: "Update Task",
-            description: "Feature not available yet",
+    function handleUpdateTodo(todoId: string, description: string, reminder: string | undefined) {
+        updateTodo({
+            todoId,
+            updateTodoInput: {
+                description,
+                reminder,
+            },
         });
     }
 
