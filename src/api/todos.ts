@@ -66,6 +66,10 @@ export async function deleteTodo(id: string) {
         credentials: "include", // This is required for cookies to be sent
     });
 
+    if (res.status === 204) {
+        return {};
+    }
+
     if (!res.ok) {
         const error = await res.json();
         throw new Error(error.message || "Failed to delete todo");
