@@ -1,7 +1,10 @@
 import React from "react";
+import { useLogin } from "../hooks/auth/useLogin";
+
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
-import { useLogin } from "../hooks/auth/useLogin";
+import { LoaderCircle } from "lucide-react";
+
 import AuthLayout from "../components/AuthLayout";
 
 function Login() {
@@ -37,7 +40,11 @@ function Login() {
                     disabled={isLoggingIn}
                     className="bg-[#9e78cf] hover:bg-[#3e1671]"
                 >
-                    Login
+                    {isLoggingIn ? (
+                        <LoaderCircle className="animate-spin" size={20} color="#fff" />
+                    ) : (
+                        "Login"
+                    )}
                 </Button>
             </form>
         </AuthLayout>
