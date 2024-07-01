@@ -24,13 +24,13 @@ function Nav() {
 
     return (
         <nav>
-            <ul className="flex items-center justify-between my-5">
-                <li>blossom.dev</li>
+            <ul className="flex items-center justify-between my-5 border-b border-[#3e1671]/40 pb-2">
+                <li className="cursor-pointer">blossom.dev</li>
 
                 {user ? (
                     <span title="logout">
                         <LogOut
-                            className={`hover:text-[#4d3967] cursor-pointer ${
+                            className={`hover:text-[#3e1671] cursor-pointer ${
                                 isLoggingOut && "cursor-not-allowed opacity-50"
                             }`}
                             onClick={handleLogout}
