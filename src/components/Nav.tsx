@@ -3,11 +3,24 @@ import { useLogout } from "../hooks/auth/useLogout";
 import { useUser } from "../hooks/auth/useUser";
 import { Button } from "./ui/button";
 import { useNavigate } from "react-router-dom";
+import { toast } from "./ui/use-toast";
 
 function Nav() {
     const { logout, isLoggingOut } = useLogout();
     const { user } = useUser();
     const navigate = useNavigate();
+
+    function handleLogout() {
+        toast({
+            title: "Logout",
+            description: "Are you sure?",
+            action: (
+                <Button className="bg-[#3e1671] hover:bg-[#4d3967]" onClick={() => logout()}>
+                    Logout
+                </Button>
+            ),
+        });
+    }
 
     return (
         <nav>
@@ -20,7 +33,7 @@ function Nav() {
                             className={`hover:text-[#4d3967] cursor-pointer ${
                                 isLoggingOut && "cursor-not-allowed opacity-50"
                             }`}
-                            onClick={() => logout()}
+                            onClick={handleLogout}
                         />
                     </span>
                 ) : (
