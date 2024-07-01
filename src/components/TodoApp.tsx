@@ -1,21 +1,15 @@
-import { useUser } from "../hooks/auth/useUser";
+import React from "react";
 import AddTodo from "./AddTodo";
 import Todos from "./Todos";
+import WelcomeMessage from "./WelcomeMessage";
 
 function TodoApp() {
-    const { user } = useUser();
-
     return (
-        <div>
-            <h1 className="text-2xl mt-5 capitalize">
-                Welcome {user?.username},
-                <br />
-                What is you task for today?
-            </h1>
-
+        <React.Fragment>
+            <WelcomeMessage />
             <AddTodo />
             <Todos />
-        </div>
+        </React.Fragment>
     );
 }
 
