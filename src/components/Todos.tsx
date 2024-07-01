@@ -55,9 +55,13 @@ function Todos() {
         <div className="h-[calc(100vh-14rem)] overflow-y-auto py-3 space-y-3 rounded-md">
             <div className="text-[#78cfb0]  mb-3">Total Task &mdash; {result}</div>
 
-            <div className="text-white mb-3">
-                Uncompleted Task &mdash; {UNCOMPLETEDTASK?.length}
-            </div>
+            {UNCOMPLETEDTASK?.length ? (
+                <div className="text-white mb-3">
+                    Uncompleted Task &mdash; {UNCOMPLETEDTASK?.length}
+                </div>
+            ) : (
+                ""
+            )}
             {UNCOMPLETEDTASK?.map(
                 (todo) =>
                     !todo.completed && (
