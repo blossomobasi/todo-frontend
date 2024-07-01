@@ -93,13 +93,17 @@ function Todos() {
                 ""
             )}
 
-            <DisplayTodo
-                todos={COMPLETEDTASK}
-                isLoading={isDeleting}
-                onComplete={handleCompleteTodo}
-                onUpdate={handleUpdateTodo}
-                onDelete={handleDeleteTodo}
-            />
+            {COMPLETEDTASK?.length
+                ? openCompleted && (
+                      <DisplayTodo
+                          todos={COMPLETEDTASK}
+                          isLoading={isDeleting}
+                          onComplete={handleCompleteTodo}
+                          onUpdate={handleUpdateTodo}
+                          onDelete={handleDeleteTodo}
+                      />
+                  )
+                : ""}
         </div>
     );
 }
