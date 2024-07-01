@@ -1,11 +1,11 @@
-import { Bell, Check, ChevronDown, Trash } from "lucide-react";
-import { dateFormatter } from "../utils";
+import { ChevronDown } from "lucide-react";
 import { useDeleteTodo } from "../hooks/todo/useDeleteTodo";
 import { useUpdateTodo } from "../hooks/todo/useUpdateTodo";
 import { useState } from "react";
 import { useToast } from "./ui/use-toast";
 import { ToastAction } from "./ui/toast";
 import { useTodos } from "../hooks/todo/useTodos";
+import DisplayTodo from "./DisplayTodo";
 
 function Todos() {
     const { todos, isLoading: isLoadingTodos, result, error } = useTodos();
@@ -62,48 +62,14 @@ function Todos() {
             ) : (
                 ""
             )}
-            {UNCOMPLETEDTASK?.map(
-                (todo) =>
-                    !todo.completed && (
-                        <div key={todo._id} className="bg-[#15101C] rounded-lg px-5 pt-5 pb-2 mb-3">
-                            <div className="flex justify-between">
-                                <p
-                                    onClick={handleUpdateTodo}
-                                    className={`w-3/4 truncate ${
-                                        todo.completed && "text-[#78cfb0] line-through"
-                                    }`}
-                                    title={todo.description}
-                                >
-                                    {todo.description}
-                                </p>
-                                <span className="flex items-center space-x-2">
-                                    <Check
-                                        className="hover:text-[#3e1671] cursor-pointer"
-                                        onClick={() => handleCompleteTodo(todo._id, todo.completed)}
-                                    />
-                                    <Trash
-                                        className={`hover:text-[#3e1671] cursor-pointer ${
-                                            isDeleting ? "opacity-50 cursor-not-allowed" : ""
-                                        }`}
-                                        onClick={() => handleDeleteTodo(todo._id)}
-                                    />
-                                </span>
-                            </div>
 
-                            <div className="flex justify-between mt-1.5">
-                                <span className="text-xs text-stone-700">
-                                    {dateFormatter(todo.createdAt)}
-                                </span>
-                                {todo.reminder && (
-                                    <span className="flex items-center text-xs text-stone-700">
-                                        <Bell size={12} className="mr-2 text-purple-200" />
-                                        {dateFormatter(todo.reminder)}
-                                    </span>
-                                )}
-                            </div>
-                        </div>
-                    )
-            )}
+            <DisplayTodo
+                todos={UNCOMPLETEDTASK}
+                isLoading={isDeleting}
+                onComplete={handleCompleteTodo}
+                onUpdate={handleUpdateTodo}
+                onDelete={handleDeleteTodo}
+            />
 
             {/* COMPLETED TASK */}
             {COMPLETEDTASK?.length ? (
@@ -127,52 +93,13 @@ function Todos() {
                 ""
             )}
 
-            {COMPLETEDTASK?.map(
-                (todo) =>
-                    todo.completed && (
-                        <div
-                            key={todo._id}
-                            className={`bg-[#15101C] rounded-lg px-5 pt-5 pb-2 mb-3 ${
-                                !openCompleted ? "hidden" : ""
-                            }`}
-                        >
-                            <div className="flex justify-between">
-                                <p
-                                    className={`w-3/4 truncate ${
-                                        todo.completed && "text-[#78cfb0] line-through"
-                                    }`}
-                                    title={todo.description}
-                                >
-                                    {todo.description}
-                                </p>
-                                <span className="flex items-center space-x-2">
-                                    <Check
-                                        className="hover:text-[#3e1671] cursor-pointer"
-                                        onClick={() => handleCompleteTodo(todo._id, todo.completed)}
-                                    />
-                                    <Trash
-                                        className={`hover:text-[#3e1671] cursor-pointer ${
-                                            isDeleting ? "opacity-50 cursor-not-allowed" : ""
-                                        }`}
-                                        onClick={() => handleDeleteTodo(todo._id)}
-                                    />
-                                </span>
-                            </div>
-
-                            <div className="flex justify-between mt-1.5">
-                                <span className="text-xs text-stone-700">
-                                    {dateFormatter(todo.createdAt)}
-                                </span>
-                                {todo.reminder && (
-                                    <span className="flex items-center text-xs text-stone-700">
-                                        <Bell size={12} className="mr-2 text-purple-200" />
-                                        {dateFormatter(todo.reminder)}
-                                    </span>
-                                )}
-                            </div>
-                        </div>
-                    )
-            )}
+            <DisplayTodo
+                todos={COMPLETEDTASK}
+                isLoading={isDeleting}
+                onComplete={handleCompleteTodo}
+                onUpdate={handleUpdateTodo}
+                onDelete={handleDeleteTodo}
+            />
         </div>
     );
 }
