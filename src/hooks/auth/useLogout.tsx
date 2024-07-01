@@ -25,10 +25,9 @@ export function useLogout() {
         },
         onSuccess: () => {
             queryClient.invalidateQueries({
-                queryKey: ["user"],
+                queryKey: ["todos"],
             });
 
-            window.location.reload();
             toast({
                 title: "Logout",
                 description: "Successfully logged out",
