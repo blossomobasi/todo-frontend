@@ -3,6 +3,7 @@ import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { useSignup } from "../hooks/auth/useSignup";
 import AuthLayout from "../components/AuthLayout";
+import { LoaderCircle } from "lucide-react";
 
 function Signup() {
     const { signup, isSigningUp } = useSignup();
@@ -47,7 +48,11 @@ function Signup() {
                     disabled={isSigningUp}
                     className="bg-[#9e78cf] hover:bg-[#3e1671]"
                 >
-                    Signup
+                    {isSigningUp ? (
+                        <LoaderCircle className="animate-spin" size={20} color="#fff" />
+                    ) : (
+                        "Signup"
+                    )}
                 </Button>
             </form>
         </AuthLayout>
