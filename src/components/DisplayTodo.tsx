@@ -1,7 +1,7 @@
 import { Bell, Check, LoaderCircle, Trash } from "lucide-react";
 import { dateFormatter } from "../utils";
 import { Todo } from "../types/todos";
-import { useState } from "react";
+import React, { useState } from "react";
 import { UpdateTodo } from "./UpdateTodo";
 import { useUpdateTodo } from "../hooks/todo/useUpdateTodo";
 
@@ -38,7 +38,7 @@ function DisplayTodo({ todos, onDelete, isLoading }: DisplayTodoProps) {
                             setOpenUpdateTodo={setOpenUpdateTodo}
                         />
                     ) : (
-                        <>
+                        <React.Fragment>
                             <div className="flex justify-between">
                                 <p
                                     onClick={() => setOpenUpdateTodo(todo._id)}
@@ -78,7 +78,7 @@ function DisplayTodo({ todos, onDelete, isLoading }: DisplayTodoProps) {
                                     </span>
                                 )}
                             </div>
-                        </>
+                        </React.Fragment>
                     )}
                 </div>
             ))}
