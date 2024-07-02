@@ -1,6 +1,5 @@
 import { ChevronDown } from "lucide-react";
 import { useDeleteTodo } from "../hooks/todo/useDeleteTodo";
-import { useUpdateTodo } from "../hooks/todo/useUpdateTodo";
 import { useState } from "react";
 import { useToast } from "./ui/use-toast";
 import { ToastAction } from "./ui/toast";
@@ -11,7 +10,6 @@ function Todos() {
     const { todos, isLoading: isLoadingTodos, result, error } = useTodos();
     const { toast } = useToast();
     const { deleteTodo, isDeleting } = useDeleteTodo();
-    const { updateTodo } = useUpdateTodo();
     const [openCompleted, setOpenCompleted] = useState(true);
 
     const UNCOMPLETEDTASK = todos?.filter((todo) => !todo.completed);
@@ -35,25 +33,6 @@ function Todos() {
         });
     }
 
-    function handleCompleteTodo(todoId: string, currentStatus: boolean) {
-        updateTodo({
-            todoId,
-            updateTodoInput: {
-                completed: !currentStatus,
-            },
-        });
-    }
-
-    function handleUpdateTodo(todoId: string, description: string, reminder: string | undefined) {
-        updateTodo({
-            todoId,
-            updateTodoInput: {
-                description,
-                reminder,
-            },
-        });
-    }
-
     return (
         <div className="h-[calc(100vh-14rem)] overflow-y-auto py-3 space-y-3 rounded-md">
             <div className="text-[#78cfb0]  mb-3">Total Task &mdash; {result}</div>
@@ -69,8 +48,6 @@ function Todos() {
             <DisplayTodo
                 todos={UNCOMPLETEDTASK}
                 isLoading={isDeleting}
-                onComplete={handleCompleteTodo}
-                onUpdate={handleUpdateTodo}
                 onDelete={handleDeleteTodo}
             />
 
@@ -101,8 +78,6 @@ function Todos() {
                       <DisplayTodo
                           todos={COMPLETEDTASK}
                           isLoading={isDeleting}
-                          onComplete={handleCompleteTodo}
-                          onUpdate={handleUpdateTodo}
                           onDelete={handleDeleteTodo}
                       />
                   )
