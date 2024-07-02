@@ -23,8 +23,6 @@ export function UpdateTodo({ currentTodoId, todo, setOpenUpdateTodo }: UpdateTod
     function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
 
-        // onUpdate(currentTodoId, description, todo.reminder);
-
         updateTodo({
             todoId: currentTodoId,
             updateTodoInput: {
@@ -42,8 +40,7 @@ export function UpdateTodo({ currentTodoId, todo, setOpenUpdateTodo }: UpdateTod
                 <textarea
                     className="w-full bg-transparent border border-[#9e78cf] rounded-lg p-2 focus-within:outline-none"
                     autoFocus
-                    // value={description}
-                    defaultValue={description}
+                    value={description}
                     onChange={(e) => setDescription(e.target.value)}
                 ></textarea>
 
